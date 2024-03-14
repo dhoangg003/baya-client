@@ -1,0 +1,110 @@
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Checkout from "../../component/Checkout/Checkout.jsx";
+
+const PaymentPage = () => {
+  const location = useLocation();
+  const { cartItems } = location.state;
+  const navigate = useNavigate();
+
+  // Tính tổng số tiền của các mặt hàng trong giỏ hàng
+  const calculateTotal = () => {
+    let total = 0;
+    cartItems.forEach((item) => {
+      // Loại bỏ dấu "," và chuyển đổi giá thành số
+      const price = parseFloat(item.giaBan.replace('₫', '').replace(',', '')); 
+      total += price * item.quantity;
+    });
+    return total.toFixed(6);
+  };
+
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+
+  // Xử lý khi thanh toán thành công
+  const handlePayment = () => {
+    // Xử lý thanh toán ở đây
+    // Sau khi thanh toán thành công, đặt trạng thái paymentSuccess thành true
+    setPaymentSuccess(true);
+  };
+
+  useEffect(() => {
+    let timer;
+    if (paymentSuccess) {
+      timer = setTimeout(() => {
+        navigate('/listmenu/`{id}');
+      }, 3000); // Chờ 5 giây trước khi chuyển hướng
+    }
+    return () => clearTimeout(timer);
+  }, [paymentSuccess, navigate]);
+
+  return (
+    <div className="min-h-screen flex justify-center items-center bg-gray-100">
+      <div className="max-w-full bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="md:flex ">
+          {/* Order Summary */}
+          <div className="md:w-1/3 px-4 py-6 md:py-8 mt-28">
+            <h2 className="text-2xl font-semibold  text-gray-800 mb-6">Your Orders</h2>
+            {/* Hiển thị thông tin sản phẩm trong giỏ hàng */}
+            {cartItems.map(item => (
+              <div key={item._id} className="flex items-center justify-between mt-6">
+                <div className="flex">
+                  <img src={item.hinhAnh} alt={item.tenHang} className="w-16 h-16 object-cover rounded-full" />
+                  <div className="mx-3">
+                    <h3 className="text-sm text-gray-600">{item.tenHang}</h3>
+                    <div className="flex items-center mt-2">
+                      <span className="text-gray-600">Price: {item.giaBan}</span>
+                      <span className="mx-1 text-gray-600">&bull;</span>
+                      <span className="text-gray-600">SL: {item.quantity}</span>
+                    </div>
+                  </div>
+                </div>
+                <span className="text-gray-600">{(parseFloat(item.giaBan.replace('₫', '')) * item.quantity).toFixed(6)}₫</span>
+              </div>
+            ))}
+            {/* Tính toán và hiển thị thông tin về đơn hàng */}
+            <div className="mt-8">
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-semibold text-gray-700">Total:</h3>
+                <span className="text-xl font-bold text-gray-800">{calculateTotal()}₫</span>
+              </div>
+              {/* Thêm phần vận chuyển và các thông tin khác về thanh toán (nếu cần) */}
+            </div>
+          </div>
+          {/* Checkout */}
+          <div className="md:w-1/3 px-4 py-6 md:py-8">
+            <Checkout /> 
+          </div>
+          {/* Payment Details */}
+          <div className="md:w-1/3 px-4 py-6 md:py-8">
+            <div className=" p-6 rounded-lg">
+              <h2 className="text-2xl font-semibold mb-6 mt-20 pt-2">Payment Details</h2>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">Name</label>
+                <input type="text" id="name" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">Phone Number</label>
+                <input type="tel" id="phone" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address">Address</label>
+                <textarea id="address" rows="4" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+              </div>
+              <button onClick={handlePayment} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Pay Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Payment Success Message */}
+      {paymentSuccess && (
+        <div className="px-4 py-6 md:py-8 fixed top-0 right-0">
+          <div className="bg-green-200 p-6 rounded-lg">
+            <p className="text-lg text-green-800">Payment successful! We will contact you shortly .</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default PaymentPage;
