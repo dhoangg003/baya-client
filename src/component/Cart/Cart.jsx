@@ -35,12 +35,20 @@ const Cart = ({ cartItems, setShowCart, showCart, setCartItems ,cartItemCount, s
   const calculateTotal = () => {
     let total = 0;
     cartItems.forEach((item) => {
-      // Loại bỏ dấu "," và chuyển đổi giá thành số
-      const price = parseFloat(item.giaBan.replace('₫', '').replace(',', '')); 
-      total += price * item.quantity;
+        // Loại bỏ dấu ",", "₫", và chuyển đổi giá thành số
+        const price = parseFloat(item.giaBan.replace(/[\D₫]/g, '').replace(',', '.')); 
+        total += price * item.quantity;
     });
-    return total.toFixed(6);
-  };
+
+    // Format total to have at most 2 decimals, remove trailing zeros if unnecessary, and add dots every 3 digits
+    let formattedTotal = total.toFixed(2);
+    formattedTotal = formattedTotal.replace(/\.?0*$/, ''); // Remove trailing zeros if unnecessary
+    formattedTotal = formattedTotal.replace(/\d(?=(\d{3})+$)/g, '$&.'); // Add dots every 3 digits
+
+    return formattedTotal;
+};
+
+
   return (
     <Transition.Root show={showCart} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setShowCart}>

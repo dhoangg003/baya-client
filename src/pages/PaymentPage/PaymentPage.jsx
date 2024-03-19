@@ -11,12 +11,19 @@ const PaymentPage = () => {
   const calculateTotal = () => {
     let total = 0;
     cartItems.forEach((item) => {
-      // Loại bỏ dấu "," và chuyển đổi giá thành số
-      const price = parseFloat(item.giaBan.replace('₫', '').replace(',', '')); 
-      total += price * item.quantity;
+        // Loại bỏ dấu ",", "₫", và chuyển đổi giá thành số
+        const price = parseFloat(item.giaBan.replace(/[\D₫]/g, '').replace(',', '.')); 
+        total += price * item.quantity;
     });
-    return total.toFixed(6);
-  };
+
+    // Format total to have at most 2 decimals, remove trailing zeros if unnecessary, and add dots every 3 digits
+    let formattedTotal = total.toFixed(2);
+    formattedTotal = formattedTotal.replace(/\.?0*$/, ''); // Remove trailing zeros if unnecessary
+    formattedTotal = formattedTotal.replace(/\d(?=(\d{3})+$)/g, '$&.'); // Add dots every 3 digits
+
+    return formattedTotal;
+};
+
 
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
@@ -38,8 +45,8 @@ const PaymentPage = () => {
   }, [paymentSuccess, navigate]);
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
-      <div className="max-w-full bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="min-h-screen flex  bg-gray-100">
+      <div className="min-w-full bg-white rounded-lg shadow-md overflow-hidden pl-0 ">
         <div className="md:flex ">
           {/* Order Summary */}
           <div className="md:w-1/3 px-4 py-6 md:py-8 mt-28">

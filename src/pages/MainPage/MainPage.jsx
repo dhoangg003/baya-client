@@ -150,10 +150,10 @@ const MainPage = () => {
                 Loại
               </th>
               <th className="p-2 border border-yellow-700 text-yellow-600">
-                Giá Bán
+                Giá khuyến mãi
               </th>
               <th className="p-2 border border-yellow-700 text-yellow-600">
-                Giá Vốn
+                Giá gốc
               </th>
             </tr>
           </thead>

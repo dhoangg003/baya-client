@@ -42,7 +42,7 @@ const Header = () => {
             <div className="flex lg:flex-1">
               <a href="#" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
-                <h1 className="text-4xl font-bold text-yellow-700">BAYA</h1>
+                <h1 className="text-4xl font-bold text-yellow-700">MAYME</h1>
               </a>
             </div>
             <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-7  ">

@@ -27,8 +27,8 @@ const Item = ({
       <p className="text-gray-600 mb-2 ">{nhomHang}</p>
       <div className="flex justify-between">
       <div>
-  <div className="block text-yellow-700 font-bold line-through mb-2">{giaBan}</div>
-  <div className="block text-yellow-700 font-bold">{giaVon}</div>
+  <div className="block text-yellow-700 font-bold line-through mb-2">{giaVon}</div>
+  <div className="block text-yellow-700 font-bold">{giaBan}</div>
 </div>
 
 
