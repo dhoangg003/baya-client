@@ -18,7 +18,6 @@ import AuthApi from "./services/authAPI";
 import { login } from "./redux/Auth/authSlice";
 
 import Order from "./pages/Order/Order";
-import Menu2 from "./pages/Menu2/Menu2";
 import ListMenu from "./pages/ListMenu/ListMenu.jsx";
 import { fetchDishList } from "./redux/DishList/dishListAction";
 
