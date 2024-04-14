@@ -189,7 +189,7 @@ const UpdateProductForm = ({
               htmlFor="giaVon"
               className="block text-sm font-medium leading-6"
             >
-              Giá vốn
+              Giá gốc
             </label>
 
             <input
@@ -235,7 +235,7 @@ const UpdateProductForm = ({
               htmlFor="giaBan"
               className="block text-sm font-medium leading-6"
             >
-              Giá bán
+              Giá khuyến mãi
             </label>
 
             <input

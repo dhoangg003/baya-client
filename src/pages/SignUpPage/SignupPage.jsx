@@ -52,7 +52,7 @@ function SignupPage() {
           <div className="w-[45%] h-full">
             <div className="w-full  h-full">
               <img
-                src="images\signUpbg.jpg"
+                src="https://ib.vib.com.vn/banners/Promotion/20220701161024970_20220126093905029_VIB_hinh_dai_dien_02-01.png"
                 alt="cafe"
                 className=" w-full object-fill  h-full "
               />
@@ -61,7 +61,7 @@ function SignupPage() {
 
           <div className="flex w-[55%]  justify-center  items-center text-center bg-white">
             <form className="bg-white" onSubmit={handleSubmit}>
-              <h1 className="text-yellow-700 font-bold text-2xl mb-1">MAYME</h1>
+              <h1 className="text-yellow-700 font-bold text-2xl mb-1">BAYA</h1>
               <p className="text-sm font-normal text-gray-600 mb-7"></p>
               <label htmlFor="hoTen">
                 <div className="flex items-center border-2 py-2 px-3 rounded-2xl ">

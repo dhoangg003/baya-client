@@ -69,13 +69,13 @@ const LoginPage = () => {
     <div className="w-full h-full relative">
       <img
         className="w-full max-h-screen opacity-10"
-        src="images/loginbg.jpg"
+        src="https://tse2.mm.bing.net/th?id=OIP.wUK5lxkdOSk5NZp9Tw1FFAHaHa&pid=Api&P=0&h=220"
         alt="background"
       />
 
       <div className="display-flex text-center w-[440px] h-auto absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 bg-white text-black rounded-lg p-2">
         <p className="Ali font-extrabold text-2xl mt-4 mb-2 text-yellow-700">
-          MAYME
+          BAYA
         </p>
 
         <p className="text-xl mb-3 font-bold">Đăng nhập</p>
