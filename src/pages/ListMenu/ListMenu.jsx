@@ -37,6 +37,7 @@ const ListMenu = () => {
       setQrcodeImage(url);
     });
   };
+
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -44,9 +45,11 @@ const ListMenu = () => {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
+
   const handleOnClick = () => {
     navigate('/mainpage');
   };
+
   const handleAddToCart = (id) => {
     const existingItem = getDishList.find((item) => item._id === id);
     const existingItemIndex = cartItems.findIndex((cartItem) => cartItem._id === id);
@@ -98,75 +101,54 @@ const ListMenu = () => {
     <div className="bg-white flex items-center justify-center relative">
       <div className="bg-white min-h-screen flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 max-w-6xl sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="bg- px-2 lg:px-4 py-2 lg:py-10 sm:rounded-xl flex lg:flex-col justify-between">
-        <div className="bg-white fixed left-24  h-full flex flex-col justify-start items-start">
-  <nav className="flex flex-col space-y-2 lg:space-y-0 lg:flex-row lg:space-x-2 lg:justify-start lg:pt-4 ">
-   
-    <div className="flex flex-col"> {/* Container mới */}
-    <button className="bg-white hover:border-yellow-700 focus:bg-yellow-500 text-black p-4 flex items-center gap-2 rounded-md" onClick={() => handleMenuClick("menu")}>
-      <MenuOutlined />
-      Menu
-    </button>
-      {uniqueTypes.map((type) => (
-        <button key={type} className="bg-white hover:border-yellow-700 focus:bg-yellow-500 text-black p-4 rounded-md " onClick={() => handleMenuClick(type)}>
-          {type}
-        </button>
-      ))}
-    </div>
-  </nav>
-</div>
-
-
-
-          {/* <div className="sm:hidden w-full relative">
-            <MenuOutlined className="text-2xl text-white" onClick={onShowMenuBar} />
-            {showMenuBar && (
-              <div className="absolute top-8  px-1  bg-opacity-50 flex items-start flex-col">
-                <div className="text-yellow-700 w-full border-b-2 border-gray-200 p-2 flex justify-start items-center gap-2 hover:text-gray-500" onClick={() => handleMenuClick("menu")}>
+          <div className="bg-white fixed left-24 h-full flex flex-col justify-start items-start">
+            <nav className="flex flex-col space-y-2 lg:space-y-0 lg:flex-row lg:space-x-2 lg:justify-start lg:pt-4 ">
+              <div className="flex flex-col">
+                <button className="bg-white hover:border-yellow-700 focus:bg-yellow-500 text-black p-4 flex items-center gap-2 rounded-md" onClick={() => handleMenuClick("menu")}>
+                  <MenuOutlined />
                   Menu
-                </div>
-
+                </button>
                 {uniqueTypes.map((type) => (
-                  <div key={type} className="text-yellow-700 w-full border-b-2 p-2 border-gray-200 inline-flex justify-start hover:text-gray-500" onClick={() => handleMenuClick(type)}>
+                  <button key={type} className="bg-white hover:border-yellow-700 focus:bg-yellow-500 text-black p-4 rounded-md " onClick={() => handleMenuClick(type)}>
                     {type}
-                  </div>
+                  </button>
                 ))}
               </div>
-            )}
-
-          </div> */}
+            </nav>
+          </div>
         </div>
         <div className="flex-1 px-2 sm:px-0">
-          <div className="flex justify-between items-center">
-            <h3
-              className={`text-3xl font-extralight text-yellow-700 ${isHovered ? 'hover:text-yellow-500' : ''}`}
-              onClick={handleOnClick}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              {tenNhaHang}
-            </h3>
-            <div className="flex items-center justify-center gap-5">
-              <div className="bg-white w-[50px] h-[50px] text-center text-2xl text-gray-600  rounded-md hover:text-gray-900 smooth-hover" onClick={handleShowQRCode}>
-                <QrcodeOutlined className="mx-[25%] my-[25%]" />
-              </div>
-              <div className="bg-white w-[50px] h-[50px] text-center text-2xl text-gray-600  rounded-md hover:text-gray-900 smooth-hover" onClick={handleShowCart}>
-                <div className="relative">
-                  <ShoppingCartOutlined className="mx-[25%] my-[25%]" />
-                  {cartItemCount > 0 && (
-                    <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-gray-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-                      {cartItemCount}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mb-10 sm:mb-0 mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">{renderMenuItems()}</div>
+        <div className="flex justify-between items-center fixed top-0 left-0 w-full bg-white p-4 border-b-2 border-yellow-700">
+
+  <h3
+    className={`text-3xl font-extralight ml-24 text-yellow-700 ${isHovered ? 'hover:text-yellow-500' : ''}`}
+    onClick={handleOnClick}
+    onMouseEnter={handleMouseEnter}
+    onMouseLeave={handleMouseLeave}
+  >
+    {tenNhaHang}
+  </h3>
+  <div className="flex items-center gap-5 mr-24">
+    <div className="bg-white w-12 h-12 text-center text-2xl text-gray-600 rounded-md hover:text-gray-900 smooth-hover" onClick={handleShowQRCode}>
+      <QrcodeOutlined className="mx-auto my-auto" />
+    </div>
+    <div className="bg-white w-12 h-12 text-center text-2xl text-gray-600 rounded-md hover:text-gray-900 smooth-hover relative" onClick={handleShowCart}>
+      <ShoppingCartOutlined className="mx-auto my-auto" />
+      {cartItemCount > 0 && (
+        <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-gray-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+          {cartItemCount}
+        </span>
+      )}
+    </div>
+  </div>
+</div>
+
+          <div className="mb-10  sm:mb-0 mt-20 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">{renderMenuItems()}</div>
         </div>
       </div>
       {showQRCode && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-80">
-          <img className="w-[300px] h[300px]" src={QrcodeImage} alt="qrcode" />
+          <img className="w-[300px] h-[300px]" src={QrcodeImage} alt="qrcode" />
           <div className="absolute top-8 right-8 gap-4 flex items-center justify-center text-blue-300 text-2xl">
             <a className="no-underline text-inherit hover:text-blue-700" href={QrcodeImage} download="menu-qrcode">
               <DownloadOutlined />

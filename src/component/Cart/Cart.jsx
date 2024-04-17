@@ -1,20 +1,23 @@
-import React from "react";
-import { Fragment, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from 'react-router-dom';
-const Cart = ({ cartItems, setShowCart, showCart, setCartItems ,cartItemCount, setCartItemCount }) => {
+
+const Cart = ({ cartItems, setShowCart, showCart, setCartItems, cartItemCount, setCartItemCount }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
+
   const closeCart = () => {
     setOpen(!open);
     setShowCart(!showCart);
     setCartItems([]);
     setCartItemCount(0);
   };
+
   const continueOrder = () => {
     setShowCart(!showCart);
   };
+
   const removeItem = (id) => {
     const newCartItems = cartItems.filter((item) => item._id !== id);
     setCartItems(newCartItems);
@@ -22,12 +25,30 @@ const Cart = ({ cartItems, setShowCart, showCart, setCartItems ,cartItemCount, s
     const newCartItemCount = newCartItems.reduce((total, item) => total + item.quantity, 0);
     setCartItemCount(newCartItemCount);
   };
+
+  const increaseQuantity = (id) => {
+    const updatedCartItems = cartItems.map((item) =>
+      item._id === id ? { ...item, quantity: item.quantity + 1 } : item
+    );
+    setCartItems(updatedCartItems);
+    setCartItemCount(cartItemCount + 1);
+  };
+
+  const decreaseQuantity = (id) => {
+    const updatedCartItems = cartItems.map((item) =>
+      item._id === id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
+    );
+    setCartItems(updatedCartItems);
+    setCartItemCount(cartItemCount - 1);
+  };
+
   const checkOut = () => {
     if (cartItems.length !== 0) {
       setCartItems([]);
       setShowCart(false);
       setCartItemCount(0);
-      navigate("/paymentpage", { state: { cartItems } });    } else {
+      navigate("/paymentpage", { state: { cartItems } });    
+    } else {
       return;
     }
   };
@@ -46,8 +67,7 @@ const Cart = ({ cartItems, setShowCart, showCart, setCartItems ,cartItemCount, s
     formattedTotal = formattedTotal.replace(/\d(?=(\d{3})+$)/g, '$&.'); // Add dots every 3 digits
 
     return formattedTotal;
-};
-
+  };
 
   return (
     <Transition.Root show={showCart} as={Fragment}>
@@ -121,12 +141,25 @@ const Cart = ({ cartItems, setShowCart, showCart, setCartItems ,cartItemCount, s
                                     </div>
                                   </div>
                                   <div className="flex  items-end justify-between text-sm">
-                                    <div className="text-gray-500 ">
-                                      số lượng:
-                                      {item.quantity}
+                                    <div className="text-gray-500">
+                                      Số lượng: {item.quantity}
                                     </div>
 
                                     <div className="">
+                                      <button
+                                        type="button"
+                                        onClick={() => increaseQuantity(item._id)}
+                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                      >
+                                        +
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => decreaseQuantity(item._id)}
+                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                      >
+                                        -
+                                      </button>
                                       <button
                                         type="button"
                                         onClick={() => removeItem(item._id)}
@@ -172,7 +205,7 @@ const Cart = ({ cartItems, setShowCart, showCart, setCartItems ,cartItemCount, s
                             className="font-medium text-indigo-600 hover:text-indigo-500"
                             onClick={continueOrder}
                           >
-                            Tiếp tục chọn món
+                            Tiếp tục chọn sản phẩm
                             <span aria-hidden="true"> &rarr;</span>
                           </button>
                         </p>

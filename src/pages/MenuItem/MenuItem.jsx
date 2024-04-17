@@ -93,7 +93,7 @@ const MenuItem = ({
             <div className="mr-2 text-yellow-700">Thông tin</div>
             <div className="mr-2 text-yellow-700">Thẻ kho</div>
             <div className="mr-2 text-yellow-700">Tồn kho</div>
-            <div className="mr-2 text-yellow-700">Món thêm</div>
+            <div className="mr-2 text-yellow-700">Xuất xứ</div>
           </div>
         </div>
         <div className="px-8 py-4 text-2xl text-yellow-700 " id={id}>

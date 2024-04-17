@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Checkout from "../../component/Checkout/Checkout.jsx";
+import orderApi from "../../services/orderAPI.js";
+import { useSelector } from "react-redux";
 
 const PaymentPage = () => {
   const location = useLocation();
   const { cartItems } = location.state;
   const navigate = useNavigate();
+  const currentUser = useSelector((state) => state.auth.currentUser);
+
+  // State lưu trữ thông tin đơn hàng
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [paymentSuccess, setPaymentSuccess] = useState(false); // Thêm state cho paymentSuccess
 
   // Tính tổng số tiền của các mặt hàng trong giỏ hàng
   const calculateTotal = () => {
@@ -22,16 +31,29 @@ const PaymentPage = () => {
     formattedTotal = formattedTotal.replace(/\d(?=(\d{3})+$)/g, '$&.'); // Add dots every 3 digits
 
     return formattedTotal;
-};
+  };
 
+  // Xử lý khi người dùng nhấn nút "Pay Now"
+  const handlePayment = async () => {
+    try {
+      // Tạo đối tượng đơn hàng
+      const newOrder = {
+        name: name,
+        phoneNumber: phoneNumber,
+        address: address,
+        cartItems: cartItems,
+        totalAmount: calculateTotal(),
+        shopName: currentUser.tenNhaHang // Pass the shop name here
+      };
 
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
+      // Gọi API để lưu đơn hàng vào cơ sở dữ liệu
+      await orderApi.create(newOrder);
 
-  // Xử lý khi thanh toán thành công
-  const handlePayment = () => {
-    // Xử lý thanh toán ở đây
-    // Sau khi thanh toán thành công, đặt trạng thái paymentSuccess thành true
-    setPaymentSuccess(true);
+      // Đặt trạng thái thanh toán thành công
+      setPaymentSuccess(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -87,15 +109,16 @@ const PaymentPage = () => {
               <h2 className="text-2xl font-semibold mb-6 mt-20 pt-2">Payment Details</h2>
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">Name</label>
-                <input type="text" id="name" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">Phone Number</label>
-                <input type="tel" id="phone" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                {/* Thêm sự kiện onChange cho trường input */}
+                <input type="tel" id="phone" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address">Address</label>
-                <textarea id="address" rows="4" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                <textarea id="address" rows="4" value={address} onChange={(e) => setAddress(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
               </div>
               <button onClick={handlePayment} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Pay Now</button>
             </div>
