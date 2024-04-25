@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Checkout from "../../component/Checkout/Checkout.jsx";
 import orderApi from "../../services/orderAPI.js";
@@ -61,7 +61,7 @@ const PaymentPage = () => {
     if (paymentSuccess) {
       timer = setTimeout(() => {
         navigate('/listmenu/`{id}');
-      }, 3000); // Chờ 5 giây trước khi chuyển hướng
+      }, 1800); // Chờ 5 giây trước khi chuyển hướng
     }
     return () => clearTimeout(timer);
   }, [paymentSuccess, navigate]);

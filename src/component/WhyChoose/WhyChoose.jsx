@@ -8,7 +8,7 @@ const WhyChoose = () => {
         {/* Section: Design Block */}
         <section className="mb-32 text-center">
           <h2 className="mb-12 pb-4 text-center text-3xl font-bold">
-            MayMe- Giúp bạn quản lý dễ dàng, bán hàng hiệu quả
+            BAYA- Giúp bạn quản lý dễ dàng, bán hàng hiệu quả
           </h2>
           <div className="grid gap-6 lg:grid-cols-3 xl:gap-x-12">
             <motion.div

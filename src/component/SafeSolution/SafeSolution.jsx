@@ -7,7 +7,7 @@ const SafeSolution = () => {
 {/* Section: Design Block */}
 <section className="mb-32 text-center">
  <h2 className="mb-12 pb-4 text-center text-3xl font-bold">
-   MayMe- Giải pháp kinh doanh an toàn
+   BAYA- Giải pháp kinh doanh an toàn
  </h2>
  <div className="grid gap-6 lg:grid-cols-3 xl:gap-x-12">
    <div className="mb-6 lg:mb-0">
